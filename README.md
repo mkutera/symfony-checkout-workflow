@@ -6,6 +6,10 @@
 of reusable **PHP components**. Symfony is used by thousands of web
 applications and most of the [popular PHP projects][2].
 
+Demo
+----
+[http://properware.azurewebsites.net](http://properware.azurewebsites.net)
+
 Requirements
 ------------
 * Install PHP 8.1 or higher and these PHP extensions: `Ctype`_, `iconv`_,
