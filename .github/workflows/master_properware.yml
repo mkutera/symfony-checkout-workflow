@@ -68,6 +68,11 @@ jobs:
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_C8C1A76C7C8747E7975977DCA5118A7D }}
           package: .
+          env: |
+            DATABASE_URL=${{ secrets.DATABASE_URL }}
+            APP_ENV=${{ secrets.APP_ENV }}
+            APP_SECRET=${{ secrets.APP_SECRET }}
+            MESSENGER_TRANSPORT_DSN=${{ secrets.MESSENGER_TRANSPORT_DSN }}
 
       - name: Clear Symfony cache
         run: php bin/console cache:clear --env=prod --no-debug
