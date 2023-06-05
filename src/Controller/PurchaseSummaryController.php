@@ -20,7 +20,8 @@ class PurchaseSummaryController extends AbstractController
     #[Route('/purchase-summary', name: 'purchase_summary')]
     public function index(): Response
     {
-        $cart = $this->cartService->findOrCreateCart($this->getUser()->getUserIdentifier());
+        $userId = $this->getUser()->getUserIdentifier();
+        $cart = $this->cartService->findOrCreateCart($userId);
 
         if (!$this->checkoutStateMachine->can($cart, 'to_summary')) {
             return $this->redirectToRoute('delivery_address');
@@ -29,7 +30,7 @@ class PurchaseSummaryController extends AbstractController
         $this->cartService->summarize($cart);
 
         return $this->render('purchase_summary/index.html.twig', [
-            'cart' => $this->cartService->findOrCreateCart(1),
+            'cart' => $this->cartService->findOrCreateCart($userId),
             'cartItems' => $this->cartService->getCartItems($cart),
             'total' => $this->cartService->getCartTotal($cart),
         ]);
