@@ -1,0 +1,27 @@
+framework:
+    workflows:
+        checkout:
+            type: state_machine
+            marking_store:
+                type: method
+                property: currentState
+            supports:
+                - App\Entity\Cart
+            places:
+                - shopping_cart
+                - delivery_address
+                - summary_for_purchase
+                - ordered
+            transitions:
+                add_items_to_cart:
+                    from: [delivery_address, shopping_cart, summary_for_purchase]
+                    to: shopping_cart
+                add_delivery_address:
+                    from: [shopping_cart, delivery_address, summary_for_purchase]
+                    to: delivery_address
+                to_summary:
+                    from: [shopping_cart, delivery_address, summary_for_purchase]
+                    to: summary_for_purchase
+                confirm_order:
+                    from: summary_for_purchase
+                    to: ordered

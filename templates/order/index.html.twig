@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Order list{% endblock %}
+
+{% block body %}
+
+    <div class="container py-5 h-100">
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+        <h2>Orders history</h2>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Order ID</th>
+                <th scope="col">Total</th>
+                <th scope="col">Creation date</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for order in orders %}
+                <tr>
+                    <th scope="row">{{ order.id }}</th>
+                    <td>{{ order.total|money_format }}</td>
+                    <td>{{ order.createdAt|date('Y-m-d H:i:s') }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

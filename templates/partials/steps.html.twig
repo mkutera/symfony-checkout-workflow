@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block navbar %}
+{% endblock %}
+{% block body %}
+    <div class="md-stepper-horizontal orange mb-4">
+        {% if workflow_can(cart, 'add_items_to_cart') or workflow_can(cart, 'add_delivery_address') or workflow_can(cart, 'to_summary') %}
+            <div class="md-step
+                {% if app.request.attributes.get('_route') == 'cart' %}active{% endif %}
+                {% if workflow_can(cart, 'add_items_to_cart') %}editable{% endif %}">
+                <div class="md-step-circle"><span>1</span></div>
+                <div class="md-step-title"><a class="nav-link stretched-link" href="{{ path('cart') }}">Shopping Cart</a></div>
+                <div class="md-step-bar-left"></div>
+                <div class="md-step-bar-right"></div>
+            </div>
+        {% endif %}
+        <div class="md-step
+                {% if app.request.attributes.get('_route') == 'delivery_address' %}active{% endif %}
+                {% if workflow_can(cart, 'add_delivery_address') %}editable{% endif %}">
+            <div class="md-step-circle"><span>2</span></div>
+            <div class="md-step-title">
+                {% if workflow_can(cart, 'add_delivery_address') or workflow_has_marked_place(cart, 'delivery_address') %}
+                    <a class="nav-link stretched-link" href="{{ path('delivery_address') }}">Delivery Address</a>
+                {% else %}
+                    <a class="nav-link disabled" href="#">Delivery Address</a>
+                {% endif %}
+            </div>
+            <div class="md-step-bar-left"></div>
+            <div class="md-step-bar-right"></div>
+        </div>
+        <div class="md-step
+                {% if app.request.attributes.get('_route') == 'purchase_summary' %}active{% endif %}
+                {% if workflow_can(cart, 'to_summary') %}editable{% endif %}">
+            <div class="md-step-circle"><span>3</span></div>
+            <div class="md-step-title">
+                {% if workflow_can(cart, 'to_summary') or workflow_has_marked_place(cart, 'to_summary') %}
+                    <a class="nav-link stretched-link" href="{{ path('purchase_summary') }}">Summary</a>
+                {% else %}
+                    <a class="nav-link disabled" href="#">Summary</a>
+                {% endif %}
+            </div>
+            <div class="md-step-bar-left"></div>
+            <div class="md-step-bar-right"></div>
+        </div>
+        <div class="md-step
+                {% if app.request.attributes.get('_route') == 'place_order' %}active{% endif %}">
+            <div class="md-step-circle"><span>4</span></div>
+            <div class="md-step-title">Confirmed</div>
+            <div class="md-step-bar-left"></div>
+            <div class="md-step-bar-right"></div>
+        </div>
+    </div>
+
+{% endblock %}
